@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Movie = require('../models/movieModels')
-const { isAuthenticated } = require('../controllers/authenticationControllers')
+const { isAuthenticated, isAdmin } = require('../controllers/authenticationControllers')
 
 
 // Define a route to get all movies
@@ -32,21 +32,26 @@ router.get('/movies', isAuthenticated, async (req, res) => {
   }
 });
 
+router.get('/movies/post', isAdmin, (req, res) => {
+  res.render('movies/new-movie')
+})
+
   
-  // Define a route to create a new movie
+// Define a route to create a new movie
 router.post('/movies', async (req, res) => {
     try {
       const { title, director, year, image, videos } = req.body;
       const movies = new Movie({ title, director, year, image, videos });
       await movies.save();
-      res.status(201).json(movies);
+      //res.status(201).json(movies);
+      res.redirect('/movies')
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
   
   //Define a route to get a specific movie by ID
-router.get('/movies/:id', async (req, res) => {
+router.get('/movies/:id/edit', async (req, res) => {
     try {
       const movies = await Movie.findById(req.params.id);
       if(!movies) {
@@ -59,12 +64,12 @@ router.get('/movies/:id', async (req, res) => {
 })
   
   //Define a route to update a movie by ID
-router.put('/movies/:id', async (req, res) => {
+router.put('/movies/:id/update', async (req, res) => {
     try {
-      const { title, director, year, image, videos } = req.body;
+      const { title, director, year, image } = req.body;
       const movies = await Movie.findByIdAndUpdate(
         req.params.id, 
-        { title, director, year, image, videos },
+        { title, director, year, image },
         { new: true }
       );
       if (!movies) {
@@ -77,9 +82,9 @@ router.put('/movies/:id', async (req, res) => {
 });
   
   // Define a route to delete a movie by ID
-router.delete('/movies/:id', async (req, res) => {
+router.get('/movies/:id/delete', async (req, res) => {
     try {
-      const movies = await Movie.findByIdAndDelete(req.params.id);
+      const movies = await Movie.findByIdAndRemove(req.params.id);
       if (!movies) {
         return res.status(404).json({ error: 'Movie not found' });
       }

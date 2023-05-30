@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     profilePic: {
         type: String,
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     resetToken: String,
     resetTokenExpiration: Date
 })

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Videos</title>
+</head>
+
+<body>
+  <h1>Videos for <%= tvshow.title %></h1>
+  <% tvshow.videos.forEach(function(video) { %>
+    <div>
+      <h3>Video</h3>
+      <video autoplay controls>
+        <source src="<%= video %>" type="video/mp4">
+      </video>
+    </div>
+  <% }) %>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create New TV Show</title>
+</head>
+<body>
+  <h1>Create New TV Show</h1>
+  <form method="POST" action="/tvshows">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+    <label for="creator">Creator:</label>
+    <input type="text" id="creator" name="creator" required>
+    <br>
+    <label for="seasons">Seasons:</label>
+    <input type="number" id="seasons" name="seasons" required>
+    <br>
+    <label for="episodes">Episodes:</label>
+    <input type="number" id="episodes" name="episodes" required>
+    <br>
+    <label for="image">Image:</label>
+    <input type="text" id="image" name="image" required>
+    <br>
+    <label for="videos">Videos:</label>
+    <input type="text" id="videos" name="videos" required>
+    <br>
+    <button type="submit">Create</button>
+  </form>
+</body>
+</html>

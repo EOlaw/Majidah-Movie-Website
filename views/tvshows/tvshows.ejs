@@ -29,7 +29,9 @@
         <p>Creator: <%= tvshow.creator %></p>
         <p>Seasons: <%= tvshow.seasons %></p>
         <p>Episodes: <%= tvshow.episodes %></p>
-        <img src="<%= tvshow.image %>" alt="<%= tvshow.title %>">
+        <a href="/tvshows/<%= tvshow._id %>/videos">
+          <img src="<%= tvshow.image %>" alt="<%= tvshow.title %>" onclick="window.location.href='/tvshows/<%= tvshow._id %>/videos';">
+        </a>
         <a href="/tvshows/<%= tvshow._id %>/edit">Edit</a>
         <a href="/tvshows/<%= tvshow._id %>/delete">Delete</a>
       </div>

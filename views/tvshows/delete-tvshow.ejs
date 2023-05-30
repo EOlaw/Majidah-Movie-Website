@@ -6,7 +6,7 @@
 <body>
   <h1>Delete TV Show</h1>
   <p>Are you sure you want to delete <%= tvshow.title %>? This action cannot be undone.</p>
-  <form action="/tvshows/<%= tvshow._id %>" method="POST">
+  <form action="<%=` /tvshows/${tvshow._id}/delete?_method=DELETE `%>" method="POST">
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" value="Delete">
   </form>

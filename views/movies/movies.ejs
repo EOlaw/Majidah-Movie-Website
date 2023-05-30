@@ -23,10 +23,12 @@
 
 
   <h1>Movies</h1>
+
   <form class="d-flex" action="/movies" method="get">
     <input class="form-control me-2" type="text" name="search" placeholder="Search for a movie" aria-label="Search" value="<%= searchQuery %>">
     <button class="btn btn-outline-success" type="submit">Search</button>
   </form>
+  
   <div class="movies-container">
     <% movies.forEach(function(movie) { %>
       <div class="movie">
