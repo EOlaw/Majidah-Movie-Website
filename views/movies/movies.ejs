@@ -1,0 +1,51 @@
+<% layout('/layouts/boilerplate') %>
+<!-- movies.ejs -->
+
+
+  <title>Movies</title>
+  <style>
+    .movies-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-gap: 20px;
+    }
+
+    .movie {
+      text-align: center;
+    }
+
+    .movie img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+  </style>
+
+
+  <h1>Movies</h1>
+  <form class="d-flex" action="/movies" method="get">
+    <input class="form-control me-2" type="text" name="search" placeholder="Search for a movie" aria-label="Search" value="<%= searchQuery %>">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+  <div class="movies-container">
+    <% movies.forEach(function(movie) { %>
+      <div class="movie">
+        <h2><%= movie.title %></h2>
+        <p>Director: <%= movie.director %></p>
+        <p>Year: <%= movie.year %></p>
+        <a href="/movies/<%= movie._id %>/videos">
+          <img src="<%= movie.image %>" alt="Movie Image" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
+        </a>
+      </div>
+    <% }) %>
+  </div>
+  <% if (prevPage || nextPage) { %>
+    <div class="pagination">
+      <% if (prevPage) { %>
+        <a href="/movies?page=<%= prevPage %>&search=<%= searchQuery %>">Previous</a>
+      <% } %>
+      <% if (nextPage) { %>
+        <a href="/movies?page=<%= nextPage %>&search=<%= searchQuery %>">Next</a>
+      <% } %>
+    </div>
+  <% } %>

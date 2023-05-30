@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit User</title>
+</head>
+<body>
+  <h1>Edit User</h1>
+  <form method="POST" action="/crud/<%= user._id %>/edit">
+    <input type="text" name="name" value="<%= user.name %>" required><br>
+    <input type="number" name="age" value="<%= user.age %>" required><br>
+    <input type="email" name="email" value="<%= user.email %>" required><br>
+    <button type="submit">Update</button>
+  </form>
+</body>
+</html>

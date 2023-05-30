@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TV Shows</title>
+</head>
+<style>
+  .tvshows-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 20px;
+  }
+
+  .tvshow {
+    text-align: center;
+  }
+
+  .tvshow img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+</style>
+<body>
+  <h1>All TV Shows</h1>
+  <div class="tvshows-container">
+    <% tvshows.forEach(function(tvshow) { %>
+      <div class="tvshow">
+        <h3><%= tvshow.title %></h3>
+        <p>Creator: <%= tvshow.creator %></p>
+        <p>Seasons: <%= tvshow.seasons %></p>
+        <p>Episodes: <%= tvshow.episodes %></p>
+        <img src="<%= tvshow.image %>" alt="<%= tvshow.title %>">
+        <a href="/tvshows/<%= tvshow._id %>/edit">Edit</a>
+        <a href="/tvshows/<%= tvshow._id %>/delete">Delete</a>
+      </div>
+    <% }) %>
+  </div>
+</body>
+</html>

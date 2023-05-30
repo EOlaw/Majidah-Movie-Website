@@ -1,0 +1,45 @@
+<div class="row">
+    <h1 class="text-center">Edit Yamcamp</h1>
+    <div class="col-6 offset-3">
+        <form action="/movies/<%=movies._id%>?_method=PUT" method="POST" class="validated-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" id="title" name="movies[title]"
+                    value="<%=movies.title %>" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Director</label>
+                <input class="form-control" type="text" id="location" name="movies[director]"
+                    value="<%=movies.director %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image Url</label>
+                <input class="form-control" type="text" id="image" name="movies[image]"
+                    value=" <%=movies.image %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="description">Year</label>
+                <textarea class="form-control" type="text" id="description"
+                    name="movies[year]" required><%= movies.year%></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-info">Update Movie</button>
+            </div>
+        </form>
+        <a href="/movies">Back To Movies</a>
+
+    </div>
+</div>

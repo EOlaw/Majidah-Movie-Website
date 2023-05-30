@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Dashboard</title>
+</head>
+<body>
+  <h1>User Dashboard</h1>
+  <% users.forEach(user => { %>
+    <div>
+      <h3><%= user.name %></h3>
+      <p>Age: <%= user.age %></p>
+      <p>Email: <%= user.email %></p>
+      <a href="/crud/<%= user._id %>">View Details</a>
+    </div>
+  <% }); %>
+</body>
+</html>

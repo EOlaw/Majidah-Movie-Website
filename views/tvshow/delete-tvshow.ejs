@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delete TV Show</title>
+</head>
+<body>
+  <h1>Delete TV Show</h1>
+  <p>Are you sure you want to delete <%= tvshow.title %>? This action cannot be undone.</p>
+  <form action="/tvshows/<%= tvshow._id %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete">
+  </form>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit TV Show</title>
+</head>
+<body>
+  <h1>Edit TV Show</h1>
+  <form action="/tvshows/<%= tvshow._id %>" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" name="title" value="<%= tvshow.title %>" required>
+    <label for="creator">Creator:</label>
+    <input type="text" name="creator" value="<%= tvshow.creator %>" required>
+    <label for="seasons">Seasons:</label>
+    <input type="number" name="seasons" value="<%= tvshow.seasons %>" required>
+    <label for="episodes">Episodes:</label>
+    <input type="number" name="episodes" value="<%= tvshow.episodes %>" required>
+    <label for="image">Image URL:</label>
+    <input type="text" name="image" value="<%= tvshow.image %>" required>
+    <input type="submit" value="Update">
+  </form>
+</body>
+</html>
