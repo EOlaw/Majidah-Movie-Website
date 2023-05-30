@@ -1,2 +1,2 @@
-# realTimeMovieWebsite
+# Majidah Movie Website
  
