@@ -1,0 +1,32 @@
+{
+  "name": "realtimemoviewebsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EOlaw/realTimeMovieWebsite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EOlaw/realTimeMovieWebsite/issues"
+  },
+  "homepage": "https://github.com/EOlaw/realTimeMovieWebsite#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.9",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "method-override": "^3.0.0",
+    "nodemailer": "^6.9.3",
+    "nodemon": "^2.0.22"
+  }
+}
