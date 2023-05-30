@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const TVShow = require('../models/tvShowModel')
+const TVShow = require('../models/tvshowModels')
 const { isAuthenticated } = require('../controllers/authenticationControllers')
 
 

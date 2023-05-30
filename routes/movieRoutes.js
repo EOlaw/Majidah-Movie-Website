@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Movie = require('../models/movieModel')
+const Movie = require('../models/movieModels')
 const { isAuthenticated } = require('../controllers/authenticationControllers')
 
 
