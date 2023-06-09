@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Movie = require('../models/movieModels')
+const User = require('../controllers/userControllers')
 const { isAuthenticated, isAdmin } = require('../controllers/authenticationControllers')
 
 
@@ -75,7 +76,7 @@ router.put('/movies/:id/update', async (req, res) => {
       if (!movies) {
         return res.status(404).json({ error: 'Movie not found'});
       }
-      res.redirect(`/movies/${movies._id}`)
+      res.redirect('/movies')
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -93,14 +94,25 @@ router.get('/movies/:id/delete', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-  
-  
-  // Define a route to view videos for a specific movie
-router.get('/movies/:id/videos', async (req, res) => {
+/*
+// GET route to display the recommendation page
+router.get('/recommendation', async (req, res) => {
+  try {
+    const movies = await Movie.find().sort({ createdAt: -1 });
+    res.render('index', { movies });
+  } catch (error) {
+    console.error('Error retrieving movies', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+*/
+// Define a route to view videos for a specific movie
+router.get('/movies/:id/videos', isAuthenticated, async (req, res) => {
+  const { id } = req.params;
     try {
-      const movie = await Movie.findById(req.params.id);
-      if (movie) {
-        res.render('movies/videos', { movie });
+      const movies = await Movie.findById(req.params.id);
+      if (movies) {
+        res.render('movies/videos', { movies });
       } else {
         res.status(404).json({ error: 'Movie not found' });
       }
@@ -108,5 +120,38 @@ router.get('/movies/:id/videos', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+// POST route to handle submitting a review/comment
+router.post('/movies/:id/review', async (req, res) => {
+  const { id } = req.params;
+  const { rating, comment } = req.body;
+  const userId = req.user.id; // Assuming you have user authentication middleware
+
+  try {
+    const movies = await Movie.findById(id);
+    if (!movies) {
+      return res.status(404).send('Movie not found');
+    }
+
+    const review = {
+      user: userId, // Associate the review with the user's ID
+      rating: rating,
+      comment: comment,
+    };
+
+    movies.reviews.push(review);
+    await movies.save();
+
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error saving review', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+
+
 
 module.exports = router;

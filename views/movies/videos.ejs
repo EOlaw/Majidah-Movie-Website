@@ -1,19 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
+
   <title>Videos</title>
-</head>
 
 <body>
-  <h1>Videos for <%= movie.title %></h1>
-  <% movie.videos.forEach(function(video) { %>
+  
+  <% movies.videos.forEach(function(video) { %>
+    <h1><%= movies.title %></h1>
     <div>
       <h3>Video</h3>
       <video autoplay controls>
         <source src="<%= video %>" type="video/mp4">
       </video>
     </div>
+    <!-- Display the ratings-->
+  <p>
+    Ratings:
+    <%= movies.reviews.length %> reviews
+  </p>
+  
+  <!-- Add review form -->
+  <h3>Add a Review</h3>
+  <form action="/movies/<%= movies._id %>/review" method="post">
+    <label for="rating">Rating:</label>
+    <div class="rating">
+      <input type="radio" name="rating" id="rating1" value="1" required>
+      <label for="rating1">1 star</label>
+      <input type="radio" name="rating" id="rating2" value="2" required>
+      <label for="rating2">2 stars</label>
+      <input type="radio" name="rating" id="rating3" value="3" required>
+      <label for="rating3">3 stars</label>
+      <input type="radio" name="rating" id="rating4" value="4" required>
+      <label for="rating4">4 stars</label>
+      <input type="radio" name="rating" id="rating5" value="5" required checked>
+      <label for="rating5">5 stars</label>
+    </div>
+    <label for="comment">Comment:</label>
+    <textarea name="comment" id="comment" required></textarea>
+    <button type="submit">Submit Review</button>
+  </form>
+  </div>
   <% }) %>
+  <!-- Display reviews -->
+  <h3>Reviews</h3>
+  <% movies.reviews.forEach((review) => { %>
+    <div class="review">
+      <p>User: <%= review.user%></p>
+      <p>Rating: <%= review.rating %></p>
+      <p>Comment: <%= review.comment %></p>
+    </div>
+  <% }) %>
+  
 </body>
-</html>
+
 

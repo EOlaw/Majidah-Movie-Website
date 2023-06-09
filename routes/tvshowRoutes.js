@@ -7,11 +7,12 @@ const { isAuthenticated, isAdmin } = require('../controllers/authenticationContr
 router.get('/tvshows', isAuthenticated, async (req, res) => {
     try {
       const tvshows = await TVShow.find();
-      res.render('tvshows/tvshows', { tvshows });
+      res.render('tvshows/tvshows', { tvshows, isAdmin: req.user.isAdmin });
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 router.get('/tvshows/post', isAdmin, (req, res) => {
   res.render('tvshows/new-tvshow')

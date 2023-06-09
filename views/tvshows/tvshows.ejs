@@ -32,10 +32,13 @@
         <a href="/tvshows/<%= tvshow._id %>/videos">
           <img src="<%= tvshow.image %>" alt="<%= tvshow.title %>" onclick="window.location.href='/tvshows/<%= tvshow._id %>/videos';">
         </a>
-        <a href="/tvshows/<%= tvshow._id %>/edit">Edit</a>
-        <a href="/tvshows/<%= tvshow._id %>/delete">Delete</a>
+        <% if(isAdmin) { %>
+          <a href="/tvshows/<%= tvshow._id %>/edit">Edit</a>
+          <a href="/tvshows/<%= tvshow._id %>/delete">Delete</a>
+        <% } %>
       </div>
     <% }) %>
   </div>
+  
 </body>
 </html>

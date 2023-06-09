@@ -1,0 +1,50 @@
+
+<!-- index.ejs -->
+
+<h1>Movie Recommendation</h1>
+
+<!-- Display movies -->
+<% movies.forEach((movie) => { %>
+  <div class="movie">
+    <h2><%= movie.title %></h2>
+    <p>Director: <%= movie.director %></p>
+    <p>
+        Ratings:
+        <%= movie.reviews.length %> reviews
+    </p>
+    <p>Year: <%= movie.year %></p>
+    <img src="<%= movie.image %>" alt="<%= movie.title %>">
+    <a href="/movies/<%= movie._id %>/videos">Watch Videos</a>
+
+    <!-- Display reviews -->
+    <h3>Reviews</h3>
+    <% movie.reviews.forEach((review) => { %>
+      <div class="review">
+        <p>User: <%= review.user%></p>
+        <p>Rating: <%= review.rating %></p>
+        <p>Comment: <%= review.comment %></p>
+      </div>
+    <% }) %>
+
+    <!-- Add review form -->
+    <h3>Add a Review</h3>
+    <form action="/movies/<%= movie._id %>/review" method="post">
+      <label for="rating">Rating:</label>
+      <div class="rating">
+        <input type="radio" name="rating" id="rating1" value="1" required>
+        <label for="rating1">1 star</label>
+        <input type="radio" name="rating" id="rating2" value="2" required>
+        <label for="rating2">2 stars</label>
+        <input type="radio" name="rating" id="rating3" value="3" required>
+        <label for="rating3">3 stars</label>
+        <input type="radio" name="rating" id="rating4" value="4" required>
+        <label for="rating4">4 stars</label>
+        <input type="radio" name="rating" id="rating5" value="5" required checked>
+        <label for="rating5">5 stars</label>
+      </div>
+      <label for="comment">Comment:</label>
+      <textarea name="comment" id="comment" required></textarea>
+      <button type="submit">Submit Review</button>
+    </form>
+  </div>
+<% }) %>
