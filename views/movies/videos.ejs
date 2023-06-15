@@ -12,10 +12,10 @@
       </video>
     </div>
     <!-- Display the ratings-->
-  <p>
-    Ratings:
-    <%= movies.reviews.length %> reviews
-  </p>
+    <p>
+      Ratings:
+      <%= movies.reviews.length %> reviews
+    </p>
   
   <!-- Add review form -->
   <h3>Add a Review</h3>
@@ -38,6 +38,7 @@
     <button type="submit">Submit Review</button>
   </form>
   </div>
+  
   <% }) %>
   <!-- Display reviews -->
   <h3>Reviews</h3>
@@ -47,6 +48,33 @@
       <p>Rating: <%= review.rating %></p>
       <p>Comment: <%= review.comment %></p>
     </div>
+    <!-- Update Review Form -->
+<h3>Update Review</h3>
+<form action="/movies/<%= movies._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+  <label for="rating">Rating:</label>
+  <div class="rating">
+    <input type="radio" name="rating" id="rating1" value="1" <%= review.rating === '1' ? 'checked' : '' %> required>
+    <label for="rating1">1 star</label>
+    <input type="radio" name="rating" id="rating2" value="2" <%= review.rating === '2' ? 'checked' : '' %> required>
+    <label for="rating2">2 stars</label>
+    <input type="radio" name="rating" id="rating3" value="3" <%= review.rating === '3' ? 'checked' : '' %> required>
+    <label for="rating3">3 stars</label>
+    <input type="radio" name="rating" id="rating4" value="4" <%= review.rating === '4' ? 'checked' : '' %> required>
+    <label for="rating4">4 stars</label>
+    <input type="radio" name="rating" id="rating5" value="5" <%= review.rating === '5' ? 'checked' : '' %> required>
+    <label for="rating5">5 stars</label>
+  </div>
+  <label for="comment">Comment:</label>
+  <textarea name="comment" id="comment" required><%= review.comment %></textarea>
+  <button type="submit">Update Review</button>
+</form>
+
+<!-- Delete Review Form -->
+<h3>Delete Review</h3>
+<form action="/movies/<%= movies._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+  <button type="submit">Delete Review</button>
+</form>
+
   <% }) %>
   
 </body>

@@ -1,1 +1,101 @@
-<h1>LET'S SEE</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slideshow</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<style>
+/* Default styles for the carousel items */
+#carouselExampleControls .carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for the images within the carousel items */
+#carouselExampleControls .carousel-item img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* Media query for small screens */
+@media (max-width: 767px) {
+  /* Adjust the height of the carousel container to fit the entire image */
+  #carouselExampleControls .carousel-inner {
+    height: auto;
+  }
+  
+  /* Adjust the height of the carousel items to fit the entire image */
+  #carouselExampleControls .carousel-item {
+    height: auto;
+  }
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  /* Set the height of the carousel container to half the screen height */
+  #carouselExampleControls .carousel-inner {
+    height: 50vh;
+  }
+  
+  /* Set the height of the carousel items to half the screen height */
+  #carouselExampleControls .carousel-item {
+    height: 50vh;
+  }
+}
+
+</style>
+
+<body>
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <% movies.slice(0, 5).forEach(function(movie, index) { %>
+        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+          <img src="<%= movie.image %>" class="d-block w-100" alt="<%= movie.title %>">
+          <div class="carousel-caption d-none d-md-block">
+            <h5><%= movie.title %></h5>
+            <p><%= movie.type %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <h2>Latest Movies</h2>
+  <div class="row">
+    <% movies.slice(0, 5).forEach(function(movie) { %>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card h-100">
+        <img class="card-img-top" src="<%= movie.image %>" alt="<%= movie.title %>">
+        <div class="card-body">
+          <h5 class="card-title"><%= movie.title %></h5>
+          <p class="card-text"><%= movie.director %> (<%= movie.year %>)</p>
+          <p class="card-text">Rating: <%= movie.rating %></p>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

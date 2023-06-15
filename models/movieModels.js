@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 // Define a Movie schema
 const movieSchema = new mongoose.Schema({
     title: {

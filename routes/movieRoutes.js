@@ -3,6 +3,7 @@ const router = express.Router();
 const Movie = require('../models/movieModels')
 const User = require('../controllers/userControllers')
 const { isAuthenticated, isAdmin } = require('../controllers/authenticationControllers')
+const checkUserCommented = require('../controllers/checkComment')
 
 
 // Define a route to get all movies
@@ -126,28 +127,79 @@ router.post('/movies/:id/review', async (req, res) => {
   const { id } = req.params;
   const { rating, comment } = req.body;
   const userId = req.user.id; // Assuming you have user authentication middleware
-
   try {
     const movies = await Movie.findById(id);
     if (!movies) {
       return res.status(404).send('Movie not found');
     }
-
     const review = {
       user: userId, // Associate the review with the user's ID
       rating: rating,
       comment: comment,
     };
-
     movies.reviews.push(review);
     await movies.save();
-
     res.redirect('/');
   } catch (error) {
     console.error('Error saving review', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
+// Update a review
+router.put('/movies/:movieId/reviews/:reviewId', async (req, res) => {
+  const { movieId, reviewId } = req.params;
+  const { rating, comment } = req.body;
+  const userId = req.user.id; // Assuming you have user authentication middleware
+  try {
+    const movies = await Movie.findById(movieId);
+    if (!movies) {
+      return res.status(404).send('Movie not found');
+    }
+    const review = movies.reviews.id(reviewId);
+    if (!review) {
+      return res.status(404).send('Review not found');
+    }
+    // Check if the review belongs to the logged-in user
+    if (review.user.toString() !== userId) {
+      return res.status(403).send('Unauthorized');
+    }
+    review.rating = rating;
+    review.comment = comment;
+    await movies.save();
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error updating review', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Delete a review
+router.delete('/movies/:movieId/reviews/:reviewId', async (req, res) => {
+  const { movieId, reviewId } = req.params;
+  const userId = req.user.id; // Assuming you have user authentication middleware
+  try {
+    const movies = await Movie.findById(movieId);
+    if (!movies) {
+      return res.status(404).send('Movie not found');
+    }
+    const review = movies.reviews.id(reviewId);
+    if (!review) {
+      return res.status(404).send('Review not found');
+    }
+    // Check if the review belongs to the logged-in user
+    if (review.user.toString() !== userId) {
+      return res.status(403).send('Unauthorized');
+    }
+    movies.reviews.pull(reviewId); // Remove the review using the pull method
+    await movies.save();
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error deleting review', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 
