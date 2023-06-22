@@ -19,6 +19,23 @@
       height: auto;
       cursor: pointer;
     }
+
+    .movie-image {
+  position: relative;
+}
+
+.movie-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  color: #fff;
+  margin-top: 10px;
+  text-align: center;
+}
+
+  
   </style>
 
 
@@ -32,15 +49,20 @@
   <div class="movies-container">
     <% movies.forEach(function(movie) { %>
       <div class="movie">
-        <h2><%= movie.title %></h2>
+        <a href="/movies/<%= movie._id %>/videos">
+          <div class="movie-image">
+            <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
+            <div class="movie-title">
+              <h2><%= movie.title %></h2>
+            </div>
+          </div>
+        </a>
         <p>Director: <%= movie.director %></p>
         <p>Year: <%= movie.year %></p>
-        <a href="/movies/<%= movie._id %>/videos">
-          <img src="<%= movie.image %>" alt="Movie Image" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
-        </a>
       </div>
     <% }) %>
   </div>
+  
   <% if (prevPage || nextPage) { %>
     <div class="pagination">
       <% if (prevPage) { %>
