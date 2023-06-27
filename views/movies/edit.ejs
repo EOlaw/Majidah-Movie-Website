@@ -1,0 +1,39 @@
+<div class="row">
+  <h1 class="text-center">Edit Movie</h1>
+  <div class="col-6 offset-3">
+    <form action="/movies/<%= movie._id %>/update?_method=PUT" method="POST" class="validated-form" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input class="form-control" type="text" id="title" name="title" value="<%= movie.title %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="director">Director</label>
+        <input class="form-control" type="text" id="director" name="director" value="<%= movie.director %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Image Url</label>
+        <input class="form-control" type="text" id="image" name="image" value="<%= movie.image %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="year">Year</label>
+        <input class="form-control" type="number" id="year" name="year" value="<%= movie.year %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-info">Update Movie</button>
+      </div>
+    </form>
+    <a href="/movies">Back To Movies</a>
+  </div>
+</div>

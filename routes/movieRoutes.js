@@ -28,11 +28,12 @@ router.get('/movies', isAuthenticated, async (req, res) => {
     const nextPage = page < totalPages ? page + 1 : null;
     const prevPage = page > 1 ? page - 1 : null;
 
-    res.render('movies/movies', { movies, nextPage, prevPage, searchQuery });
+    res.render('movies/movies', { movies, nextPage, prevPage, searchQuery, isAdmin: req.user.isAdmin });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 router.get('/movies/post', isAdmin, (req, res) => {
   res.render('movies/new-movie')
@@ -52,36 +53,38 @@ router.post('/movies', async (req, res) => {
     }
 });
   
-  //Define a route to get a specific movie by ID
+// Define a route to get a specific movie by ID
 router.get('/movies/:id/edit', async (req, res) => {
-    try {
-      const movies = await Movie.findById(req.params.id);
-      if(!movies) {
-        return res.status(404).json( {error: 'Movie not found' })
-      }
-      res.render('movies/edits', { movies });
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' })
+  try {
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) {
+      return res.status(404).json({ error: 'Movie not found' });
     }
-})
-  
-  //Define a route to update a movie by ID
+    res.render('movies/edit', { movie });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Define a route to update a movie by ID
 router.put('/movies/:id/update', async (req, res) => {
     try {
-      const { title, director, year, image } = req.body;
-      const movies = await Movie.findByIdAndUpdate(
-        req.params.id, 
-        { title, director, year, image },
-        { new: true }
-      );
-      if (!movies) {
-        return res.status(404).json({ error: 'Movie not found'});
-      }
-      res.redirect('/movies')
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+    const { title, director, year, image } = req.body;
+    const movie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      { title, director, year, image },
+      { new: true }
+    );
+    if (!movie) {
+      return res.status(404).json({ error: 'Movie not found' });
     }
+    console.log(movie)
+    res.redirect('/movies');
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
   
   // Define a route to delete a movie by ID
 router.get('/movies/:id/delete', async (req, res) => {
@@ -90,7 +93,7 @@ router.get('/movies/:id/delete', async (req, res) => {
       if (!movies) {
         return res.status(404).json({ error: 'Movie not found' });
       }
-      res.json({ message: 'Movie deleted successfully' });
+      res.redirect('/movies')
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }

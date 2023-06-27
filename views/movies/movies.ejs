@@ -1,75 +1,73 @@
 <% layout('/layouts/boilerplate') %>
 <!-- movies.ejs -->
 
+<title>Movies</title>
+<style>
+  .movies-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 20px;
+  }
 
-  <title>Movies</title>
-  <style>
-    .movies-container {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-gap: 20px;
-    }
+  .movie {
+    text-align: center;
+  }
 
-    .movie {
-      text-align: center;
-    }
+  .movie img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
 
-    .movie img {
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-    }
+  .movie-image {
+    position: relative;
+  }
 
-    .movie-image {
-  position: relative;
-}
+  .movie-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+  }
+</style>
 
-.movie-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 10px;
-  color: #fff;
-  margin-top: 10px;
-  text-align: center;
-}
+<h1>Movies</h1>
 
-  
-  </style>
+<form class="d-flex" action="/movies" method="get">
+  <input class="form-control me-2" type="text" name="search" placeholder="Search for a movie" aria-label="Search" value="<%= searchQuery %>">
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
 
-
-  <h1>Movies</h1>
-
-  <form class="d-flex" action="/movies" method="get">
-    <input class="form-control me-2" type="text" name="search" placeholder="Search for a movie" aria-label="Search" value="<%= searchQuery %>">
-    <button class="btn btn-outline-success" type="submit">Search</button>
-  </form>
-  
-  <div class="movies-container">
-    <% movies.forEach(function(movie) { %>
-      <div class="movie">
-        <a href="/movies/<%= movie._id %>/videos">
-          <div class="movie-image">
-            <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
-            <div class="movie-title">
-              <h2><%= movie.title %></h2>
-            </div>
+<div class="movies-container">
+  <% movies.forEach(function(movie) { %>
+    <div class="movie">
+      <a href="/movies/<%= movie._id %>/videos">
+        <div class="movie-image">
+          <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
+          <div class="movie-title">
+            <h2><%= movie.title %></h2>
           </div>
-        </a>
-        <p>Director: <%= movie.director %></p>
-        <p>Year: <%= movie.year %></p>
-      </div>
-    <% }) %>
-  </div>
-  
-  <% if (prevPage || nextPage) { %>
-    <div class="pagination">
-      <% if (prevPage) { %>
-        <a href="/movies?page=<%= prevPage %>&search=<%= searchQuery %>">Previous</a>
-      <% } %>
-      <% if (nextPage) { %>
-        <a href="/movies?page=<%= nextPage %>&search=<%= searchQuery %>">Next</a>
+        </div>
+      </a>
+      <% if(isAdmin) { %>
+        <a href="/movies/<%= movie._id %>/edit">Edit</a>
+        <a href="/movies/<%= movie._id %>/delete">Delete</a>
       <% } %>
     </div>
-  <% } %>
+  <% }) %>
+</div>
+
+<% if (prevPage || nextPage) { %>
+  <div class="pagination">
+    <% if (prevPage) { %>
+      <a href="/movies?page=<%= prevPage %>&search=<%= searchQuery %>">Previous</a>
+    <% } %>
+    <% if (nextPage) { %>
+      <a href="/movies?page=<%= nextPage %>&search=<%= searchQuery %>">Next</a>
+    <% } %>
+  </div>
+<% } %>
