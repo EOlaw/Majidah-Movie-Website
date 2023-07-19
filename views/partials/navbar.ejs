@@ -1,31 +1,75 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">Majidah</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/home">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="">Genre</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="">Country</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/movies">Movies</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/tvshows">TV-Series</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/new-and-popular">Top IMDb</a>
-            </li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Majidah</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="">Genre</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="">Country</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/movies">Movies</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/tvshows">TV-Series</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/new-and-popular">Top IMDb</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <% if(!currentUser) {%>
+        <li class="nav-item">
+          <a class="nav-link active" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/register">Register</a>
+        </li>
+        <% } else {%>
+        <li class="nav-item">
+          <!-- Search Button -->
+          <form class="d-flex" method="get" role="search">
+            <input class="form-control me-2" id="inputValue" type="search" name="search" placeholder="Search" aria-label="Search">
+            <input type="hidden" id="searchCategory" name="category">
+            <button class="btn btn-outline-success me-2" type="submit" id="search">Search</button>
+          </form>
+        </li>
+        <li class="nav-item">
+          <div class="btn-group">
+            <button type="button" class="btn btn-info">Welcome to Majidah, <%= currentUser.name %></button>
+            <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split me-2" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/account-setting">Setting</a></li>
+              <li><a class="dropdown-item" href="/purchase">Purchase</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <form action="/logout" class="d-flex">
+            <button class="btn btn-danger btn-block" class="form-control me-2" href="/logout">Logout</button>
+          </form>
+        </li>
+        <% } %>
+      </ul>
     </div>
+  </div>
 </nav>
+
+<script>
+  function changeSearchCategory(category) {
+    document.getElementById('searchCategory').value = category;
+  }
+</script>

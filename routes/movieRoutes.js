@@ -35,7 +35,7 @@ router.get('/movies', isAuthenticated, async (req, res) => {
 });
 
 
-router.get('/movies/post', isAdmin, (req, res) => {
+router.get('/movies/new', isAdmin, (req, res) => {
   res.render('movies/new-movie')
 })
 
@@ -78,7 +78,7 @@ router.put('/movies/:id/update', async (req, res) => {
     if (!movie) {
       return res.status(404).json({ error: 'Movie not found' });
     }
-    console.log(movie)
+    console.log(`This movie is now updated: ${movie.title}`)
     res.redirect('/movies');
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -93,6 +93,7 @@ router.get('/movies/:id/delete', async (req, res) => {
       if (!movies) {
         return res.status(404).json({ error: 'Movie not found' });
       }
+      console.log(`This movie is now deleted ${movies.title}`)
       res.redirect('/movies')
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
@@ -142,7 +143,7 @@ router.post('/movies/:id/review', async (req, res) => {
     };
     movies.reviews.push(review);
     await movies.save();
-    res.redirect('/');
+    res.redirect('/movies');
   } catch (error) {
     console.error('Error saving review', error);
     res.status(500).send('Internal Server Error');
@@ -170,7 +171,7 @@ router.put('/movies/:movieId/reviews/:reviewId', async (req, res) => {
     review.rating = rating;
     review.comment = comment;
     await movies.save();
-    res.redirect('/');
+    res.redirect('/movies');
   } catch (error) {
     console.error('Error updating review', error);
     res.status(500).send('Internal Server Error');

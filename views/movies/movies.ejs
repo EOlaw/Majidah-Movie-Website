@@ -2,57 +2,68 @@
 <!-- movies.ejs -->
 
 <title>Movies</title>
+
 <style>
-  .movies-container {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-gap: 20px;
-  }
+  body {
+  background-color: #D3D3D3;
+}
 
-  .movie {
-    text-align: center;
-  }
+.movies-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(184px, 1fr));
+  grid-gap: 20px;
+}
 
-  .movie img {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-  }
+.movie {
+  text-align: center;
+  border: 2px solid none;
+}
 
-  .movie-image {
-    position: relative;
-  }
+.movie img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  cursor: pointer;
+}
 
-  .movie-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 5px;
-    color: #fff;
-    font-size: 1rem;
-    text-align: center;
-  }
+.movie-title {
+  padding: 5px;
+  color: black;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.filter-buttons {
+  margin-bottom: 20px;
+}
+
+.filter-button {
+  margin-right: 10px;
+}
+
 </style>
 
-<h1>Movies</h1>
 
-<form class="d-flex" action="/movies" method="get">
-  <input class="form-control me-2" type="text" name="search" placeholder="Search for a movie" aria-label="Search" value="<%= searchQuery %>">
-  <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
+<h1>Movies</h1>
+<!--
+<div class="filter-buttons">
+  <button class="filter-button" onclick="filterMovies('type', 'movie')">Movie</button>
+  <button class="filter-button" onclick="filterMovies('type', 'tvshow')">TV Show</button>
+  <button class="filter-button" onclick="filterMovies('quality', 'HD')">HD</button>
+  <button class="filter-button" onclick="filterMovies('quality', 'SD')">SD</button>
+  
+</div>
+-->
 
 <div class="movies-container">
   <% movies.forEach(function(movie) { %>
     <div class="movie">
       <a href="/movies/<%= movie._id %>/videos">
-        <div class="movie-image">
-          <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
-          <div class="movie-title">
-            <h2><%= movie.title %></h2>
-          </div>
-        </div>
+        <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" onclick="window.location.href='/movies/<%= movie._id %>/videos';">
       </a>
+      <div class="movie-title">
+        <h2><%= movie.title %></h2>
+      </div>
       <% if(isAdmin) { %>
         <a href="/movies/<%= movie._id %>/edit">Edit</a>
         <a href="/movies/<%= movie._id %>/delete">Delete</a>
@@ -71,3 +82,13 @@
     <% } %>
   </div>
 <% } %>
+
+<script>
+  /*
+  function filterMovies(filterBy, filterValue) {
+    const url = new URL(window.location.href);
+    url.searchParams.set(filterBy, filterValue);
+    window.location.href = url.toString();
+  }
+  */
+</script>

@@ -30,6 +30,6 @@ function isAdmin (req, res, next) {
     } else {
         res.redirect('/login')
     }
-  };
+};
 
 module.exports = { isAuthenticated, isAdmin }
