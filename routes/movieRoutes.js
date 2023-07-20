@@ -6,6 +6,10 @@ const { isAuthenticated, isAdmin } = require('../controllers/authenticationContr
 const checkUserCommented = require('../controllers/checkComment')
 
 
+router.get('/p', (req, res) => {
+  console.log(Movie.populate)
+})
+
 // Define a route to get all movies
 router.get('/movies', isAuthenticated, async (req, res) => {
   try {
@@ -115,7 +119,7 @@ router.get('/recommendation', async (req, res) => {
 router.get('/movies/:id/videos', isAuthenticated, async (req, res) => {
   const { id } = req.params;
     try {
-      const movies = await Movie.findById(req.params.id);
+      const movies = await Movie.findById(req.params.id).populate('reviews.user');
       if (movies) {
         res.render('movies/videos', { movies });
       } else {
@@ -132,7 +136,7 @@ router.post('/movies/:id/review', async (req, res) => {
   const { rating, comment } = req.body;
   const userId = req.user.id; // Assuming you have user authentication middleware
   try {
-    const movies = await Movie.findById(id);
+    const movies = await Movie.findById(id).populate('reviews.user');
     if (!movies) {
       return res.status(404).send('Movie not found');
     }
@@ -197,7 +201,7 @@ router.delete('/movies/:movieId/reviews/:reviewId', async (req, res) => {
     }
     movies.reviews.pull(reviewId); // Remove the review using the pull method
     await movies.save();
-    res.redirect('/');
+    res.redirect('/movies');
   } catch (error) {
     console.error('Error deleting review', error);
     res.status(500).send('Internal Server Error');
