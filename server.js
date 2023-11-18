@@ -24,7 +24,7 @@ const userRoutes = require('./routes/userRoutes')
 
 
 // Set up the database connection
-mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(dbUrl);
 const db = mongoose.connection;
 // Check for database connection errors
 db.on("error", console.error.bind(console, "connection error:"));
