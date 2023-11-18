@@ -76,8 +76,8 @@ app.use('/', tvShowRoutes);
 app.use('/', userRoutes)
 
 
-
+const port = process.env.PORT || 3000;
 // Start the server
-app.listen(4500, () => {
-  console.log('Server started on port 3000');
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });
